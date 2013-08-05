@@ -34,10 +34,6 @@
     <DocumentationFile>bin\Release\FsCheckVectorTest.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FsCheck">
-      <HintPath>..\packages\FsCheck.0.9.1.0\lib\net40-Client\FsCheck.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="FSharpx.Core">
       <HintPath>..\packages\FSharpx.Core.1.8.35\lib\40\FSharpx.Core.dll</HintPath>
       <Private>True</Private>
@@ -65,6 +61,13 @@
     <Compile Include="NUnitRunner.fs" />
     <Compile Include="VectorTest.fs" />
     <Compile Include="FsUnitTestFicture.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FsCheck\FsCheck\FsCheck.fsproj">
+      <Name>FsCheck</Name>
+      <Project>{32aa3276-bba1-41ce-b78a-706b8454ec8d}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DC3BE9
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ExperimentalVectorTest", "ExperimentalVectorTest\ExperimentalVectorTest.fsproj", "{9A6B5120-DEF6-409C-8CFE-963F45427CE3}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsCheck", "..\..\..\GitHub\FsCheck\FsCheck\FsCheck.fsproj", "{32AA3276-BBA1-41CE-B78A-706B8454EC8D}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsCheck", "..\FsCheck\FsCheck\FsCheck.fsproj", "{32AA3276-BBA1-41CE-B78A-706B8454EC8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
