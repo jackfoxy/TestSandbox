@@ -6,7 +6,6 @@ open FSharpx.Collections.Vector
 open FsCheck
 open FsCheck.Transitions
 open NUnit.Framework
-open NUnitRunner
 
 open FsUnit
 
@@ -170,7 +169,8 @@ let checkLookup (a, (m : Vector<int>)) =         //no way to distinguish which t
     if m.Length > 0 then 
             (last m = (lastVofV nthNth a) a)
             .&. (nth 0 m = (firstVofV nthNth a) a) 
-            //.&. (true = false) |@ sprintf "true = false, and m.length= %i" m.Length
+            .&. (true = false) |@ sprintf "true = false, and m.length= %i" m.Length
+            .&. (true = false) |@ sprintf "and true = false, and m.length= %i" m.Length
     else (true = true) |@ sprintf "true = true"
     .&. (tryLast m = (lastVofV tryNthNth a) a)              //also use other operations
     .&. (tryNth 0 m = (firstVofV tryNthNth a) a)    //to test the correctness of those too

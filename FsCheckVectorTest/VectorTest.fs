@@ -6,7 +6,6 @@ open FSharpx.Collections.Vector
 open FsCheck
 open FsCheck.Commands
 open NUnit.Framework
-open NUnitRunner
 
 open FsUnit
 
@@ -114,6 +113,7 @@ let conjInnerEmpty check =
         { new ICommand<Vector2Actual,VectorModel>() with
             member x.RunActual c = c |> conj empty
             member x.RunModel m = m
+            //member x.Pre m = (length m) > 0
             member x.Post (c,m) = check (c,m) //not (check (c,m))
             override x.ToString() = sprintf "conjInnerEmpty"}
 
@@ -149,7 +149,7 @@ let ``Grow, Update, Shrink, check by flatten`` = [tryUpdConjInner1Elem(checkFlat
 [<Test>]
 let ``Grow Vector<Vector<'T>>, check by flatten``() =
     Check.QuickThrowOnFailure (asProperty (specVofV ``Grow, check by flatten``))
-//    Check.VerboseThrowOnFailure (asProperty specVector2)
+//    Check.VerboseThrowOnFailure (asProperty (specVofV ``Grow, check by flatten``))
 
 [<Test>]
 let ``Grow Vector<Vector<'T>>, check by look-up``() =
@@ -171,19 +171,19 @@ let WindowedTest() =
               return ((windowSeq windowLength source), (windowLength, source))
         }
         
-    Check.QuickThrowOnFailure   (Prop.forAll  (Arb.fromGen testWindowed)
+//    Check.QuickThrowOnFailure   (Prop.forAll  (Arb.fromGen testWindowed)
 //    Check.Quick (Prop.forAll  (Arb.fromGen testWindowed)  //will leave NUnit runner green-lit, 
                                                             //even though it encountered a falsifiable
                                                             //and reports falsifiable in runner Text Output
-//    Check.VerboseThrowOnFailure (Prop.forAll  (Arb.fromGen testWindowed) 
-                                (fun (vOfV, (windowLength, source)) -> 
-                                    let outerLength =
-                                        if source.Length = 0 then 1
-                                        else int (Math.Ceiling((float)source.Length/(float)windowLength))
-                                    (outerLength = vOfV.Length &&
-                                     flatten vOfV |> List.ofSeq = source)
-                                    |> Prop.classify (source.Length > 0 && outerLength > 0) "windowLength, outerLength"
-                                    |> Prop.classify (source.Length = 0) "empty"
-                                    |> Prop.collect (windowLength, outerLength)
-                                )
-                   )
+    Check.VerboseThrowOnFailure (Prop.forAll  (Arb.fromGen testWindowed) 
+                (fun (vOfV, (windowLength, source)) -> 
+                    let outerLength =
+                        if source.Length = 0 then 1
+                        else int (Math.Ceiling((float)source.Length/(float)windowLength))
+                    (outerLength = vOfV.Length && //true = false &&
+                        flatten vOfV |> List.ofSeq = source)
+                    |> Prop.classify (source.Length > 0 && outerLength > 0) "windowLength, outerLength"
+                    |> Prop.classify (source.Length = 0) "empty"
+                    |> Prop.collect (windowLength, outerLength)
+                )
+    )
