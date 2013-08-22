@@ -124,17 +124,20 @@ let shrinkInner check =
             member x.RunModel m = m |> initial
             member x.Pre m = (length m) > 0
             member x.Post (c,m) = check (c,m) //not (check (c,m))
-            override x.ToString() = sprintf "conjInnerEmpty"}
+            override x.ToString() = sprintf "shrinkInner"}
 
-let checkFlatten (c,m) = 
-    m = (flatten c |> ofSeq)        //main check is that the list is the same
+let checkFlatten (a,m) = 
+    m = (flatten a |> ofSeq) |@ sprintf "failed flatten, model = %A" m        //main check is that the list is the same
 
-let checkLookup (c, (m : Vector<int>)) =         //no way to distinguish which test failed
-    (if m.Length = 0 then true
-     else last m = (lastVofV nthNth c) c
-          && nth 0 m = (firstVofV nthNth c) c)
-    && tryLast m = (lastVofV tryNthNth c) c      //also use other operations
-    && tryNth 0 m = (firstVofV tryNthNth c) c    //to test the correctness of those too
+let checkLookup (a, (m : Vector<int>)) =         //no way to distinguish which test failed
+    if m.Length > 0 then 
+            (last m = (lastVofV nthNth a) a)
+            .&. (nth 0 m = (firstVofV nthNth a) a) 
+//            .&. (true = false) |@ sprintf "true = false, and m.length= %i" m.Length
+//            .&. (true = false) |@ sprintf "and true = false, and m.length= %i" m.Length
+    else (true = true) |@ sprintf "true = true"
+    .&. (tryLast m = (lastVofV tryNthNth a) a)              //also use other operations
+    .&. (tryNth 0 m = (firstVofV tryNthNth a) a)    //to test the correctness of those too
 
 let specVofV genList =   
     { new ISpecification<Vector2Actual, VectorModel> with
@@ -171,17 +174,18 @@ let WindowedTest() =
               return ((windowSeq windowLength source), (windowLength, source))
         }
         
-//    Check.QuickThrowOnFailure   (Prop.forAll  (Arb.fromGen testWindowed)
+    Check.QuickThrowOnFailure   (Prop.forAll  (Arb.fromGen testWindowed)
 //    Check.Quick (Prop.forAll  (Arb.fromGen testWindowed)  //will leave NUnit runner green-lit, 
                                                             //even though it encountered a falsifiable
                                                             //and reports falsifiable in runner Text Output
-    Check.VerboseThrowOnFailure (Prop.forAll  (Arb.fromGen testWindowed) 
+//    Check.VerboseThrowOnFailure (Prop.forAll  (Arb.fromGen testWindowed) 
                 (fun (vOfV, (windowLength, source)) -> 
                     let outerLength =
                         if source.Length = 0 then 1
                         else int (Math.Ceiling((float)source.Length/(float)windowLength))
-                    (outerLength = vOfV.Length && //true = false &&
-                        flatten vOfV |> List.ofSeq = source)
+                    (((outerLength = vOfV.Length) |@ sprintf "expected outer length= %i actual outer length= %i" outerLength vOfV.Length
+//                        .&. (true = false) |@ sprintf "true = false" 
+                        .&. (flatten vOfV |> List.ofSeq = source) |@ sprintf "flattend vOfV not equal source list"))
                     |> Prop.classify (source.Length > 0 && outerLength > 0) "windowLength, outerLength"
                     |> Prop.classify (source.Length = 0) "empty"
                     |> Prop.collect (windowLength, outerLength)
