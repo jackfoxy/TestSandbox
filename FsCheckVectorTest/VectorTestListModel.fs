@@ -323,7 +323,7 @@ let check (a, (m : List<List<int>>)) =
     else (flatten a |> List.ofSeq = flattenModel m) |@ sprintf "flatten, actual = %A model = %A" a m                                    //elements and order match
     .&. (lastEachPopulatedVect a = lastEachPopulatedModel m) |@ sprintf "last elem of each populated row, actual = %A model = %A" a m   //elements divided into correct rows
     .&. (populatePosVect a = populatePosModel m) |@ sprintf "pattern of populated rows, actual = %A model = %A" a m                     //pattern of populated rows
-//    .&. (true = false) |@ sprintf "true = false"                                                                                      //also reports succeeding properties, to be debugged                                              
+    .&. (true = false) |@ sprintf "true = false"                                                                                      //also reports succeeding properties, to be debugged                                              
     .&. (tryFirstInModel m = (lastVofV tryNthNth a) a) |@ sprintf "tryFirstM m = lastVofV a, actual = %A model = %A" a m                //tryNthNth not otherwise tested
     .&. (tryLastInModel m = (firstVofV tryNthNth a) a) |@ sprintf "tryLastInModel m = firstVofV a, actual = %A model = %A" a m     
 

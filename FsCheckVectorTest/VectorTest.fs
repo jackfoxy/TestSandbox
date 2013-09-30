@@ -184,7 +184,7 @@ let WindowedTest() =
                         if source.Length = 0 then 1
                         else int (Math.Ceiling((float)source.Length/(float)windowLength))
                     (((outerLength = vOfV.Length) |@ sprintf "expected outer length= %i actual outer length= %i" outerLength vOfV.Length
-//                        .&. (true = false) |@ sprintf "true = false" 
+                        .&. (true = false) |@ sprintf "true = false" 
                         .&. (flatten vOfV |> List.ofSeq = source) |@ sprintf "flattend vOfV not equal source list"))
                     |> Prop.classify (source.Length > 0 && outerLength > 0) "windowLength, outerLength"
                     |> Prop.classify (source.Length = 0) "empty"

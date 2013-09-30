@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DC3BE9
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsCheck", "..\FsCheck\FsCheck\FsCheck.fsproj", "{32AA3276-BBA1-41CE-B78A-706B8454EC8D}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "UnquoteVectorTest", "UnquoteVectorTest\UnquoteVectorTest.fsproj", "{2A311258-9E9B-4438-9DC7-610ECE1B3B11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{32AA3276-BBA1-41CE-B78A-706B8454EC8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32AA3276-BBA1-41CE-B78A-706B8454EC8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32AA3276-BBA1-41CE-B78A-706B8454EC8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A311258-9E9B-4438-9DC7-610ECE1B3B11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A311258-9E9B-4438-9DC7-610ECE1B3B11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A311258-9E9B-4438-9DC7-610ECE1B3B11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A311258-9E9B-4438-9DC7-610ECE1B3B11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
